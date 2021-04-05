@@ -1,0 +1,113 @@
+﻿@page "/catalog"
+
+@using PokEBay.UI.Infrastructure.Catalog.DTO;
+@using PokEBay.UI.Infrastructure.Catalog;
+
+@using PokEBay.UI.Infrastructure.Basket.DTO;
+@using PokEBay.UI.Infrastructure.Basket;
+
+@inject IBasketService _basketService;
+@inject ICatalogService _catalogService;
+
+<h3>Catalog</h3>
+
+@if (!string.IsNullOrEmpty(_error))
+{
+    <div class="alert-danger">
+        @_error
+    </div>
+}
+
+@if (_loading)
+{
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+}
+
+@if (catalogItems != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                @*<th>Id</th>*@
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in catalogItems)
+            {
+                <tr>
+                    <td><img src="@item.PictureUri" alt="Image not found" height="100" width="100"></td>
+                    @*<td>@item.Id</td>*@
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <button class="btn btn-info btn-sm shadow" @onclick="@(()=> AddItemToBasketAsync(item))">Add to basket</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    string _error;
+    bool _loading = true;
+
+    IEnumerable<CatalogItemDto> catalogItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _error = string.Empty;
+
+        try
+        {
+            catalogItems = await _catalogService.GetCatalogItemsAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+
+        _loading = false;
+    }
+
+    private async Task AddItemToBasketAsync(CatalogItemDto catalogItem)
+    {
+        _loading = true;
+        _error = string.Empty;
+
+        var basketItemDto = new BasketItemDto
+        {
+            Id = catalogItem.Id,
+            Description = catalogItem.Description,
+            Name=catalogItem.Name,
+            PictureUri = catalogItem.PictureUri,
+            Price = catalogItem.Price
+        };
+
+        try
+        {
+            await _basketService.AddToBasketAsync(basketItemDto);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+
+        _loading = false;
+    }
+
+}

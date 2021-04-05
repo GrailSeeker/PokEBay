@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokEBay.UI", "PokEBay.UI\PokEBay.UI.csproj", "{5EBB6B05-9BAA-42DA-B049-CF5946E4B491}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokEBay.Basket.API", "PokEBay.Basket.API\PokEBay.Basket.API.csproj", "{7E7C6CC0-5C2A-47C6-95DF-DDD67ECC7A75}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokEBay.Catalog.API", "PokEBay.Catalog.API\PokEBay.Catalog.API.csproj", "{91A20E09-38E3-4127-8ABD-DA55CD7A88AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokEBay.Orders.API", "PokEBay.Orders.API\PokEBay.Orders.API.csproj", "{080E83BE-626E-481B-9414-52B5B3C1580C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokEBay.Notifications.API", "PokEBay.Notifications.API\PokEBay.Notifications.API.csproj", "{EED9B84C-D061-48D1-829D-940BF1E7D49A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{FA9ECFE2-267F-46F9-B42D-7CEFBC4A8B35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{F81F9915-2C3F-4D90-A4B6-F7AD3F635A1D}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\pokebay-pubsub.yaml = dapr\components\pokebay-pubsub.yaml
+		dapr\components\pokebay-statestore.yaml = dapr\components\pokebay-statestore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{ED44E500-9732-4C47-B2DE-E826809E1E0E}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\configuration\pokebay-config.yaml = dapr\configuration\pokebay-config.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0D335DA8-78DE-4D51-9B46-0AB8431C73C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{CA23E112-64E5-49FD-876D-642CD6B2A8A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{B8CC277A-B5D0-4C25-89DC-804EEF52B0CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokEBayTestUI", "PokEBayTestUI\PokEBayTestUI.csproj", "{64B506B2-66E3-43C4-AEF0-34AB58C1D627}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5DD5BE92-B390-4424-AE78-B43822D9CB2F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5EBB6B05-9BAA-42DA-B049-CF5946E4B491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EBB6B05-9BAA-42DA-B049-CF5946E4B491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EBB6B05-9BAA-42DA-B049-CF5946E4B491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EBB6B05-9BAA-42DA-B049-CF5946E4B491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7C6CC0-5C2A-47C6-95DF-DDD67ECC7A75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7C6CC0-5C2A-47C6-95DF-DDD67ECC7A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7C6CC0-5C2A-47C6-95DF-DDD67ECC7A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7C6CC0-5C2A-47C6-95DF-DDD67ECC7A75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91A20E09-38E3-4127-8ABD-DA55CD7A88AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91A20E09-38E3-4127-8ABD-DA55CD7A88AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91A20E09-38E3-4127-8ABD-DA55CD7A88AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91A20E09-38E3-4127-8ABD-DA55CD7A88AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{080E83BE-626E-481B-9414-52B5B3C1580C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080E83BE-626E-481B-9414-52B5B3C1580C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080E83BE-626E-481B-9414-52B5B3C1580C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080E83BE-626E-481B-9414-52B5B3C1580C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED9B84C-D061-48D1-829D-940BF1E7D49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED9B84C-D061-48D1-829D-940BF1E7D49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED9B84C-D061-48D1-829D-940BF1E7D49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED9B84C-D061-48D1-829D-940BF1E7D49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64B506B2-66E3-43C4-AEF0-34AB58C1D627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64B506B2-66E3-43C4-AEF0-34AB58C1D627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64B506B2-66E3-43C4-AEF0-34AB58C1D627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64B506B2-66E3-43C4-AEF0-34AB58C1D627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD5BE92-B390-4424-AE78-B43822D9CB2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD5BE92-B390-4424-AE78-B43822D9CB2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD5BE92-B390-4424-AE78-B43822D9CB2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD5BE92-B390-4424-AE78-B43822D9CB2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5EBB6B05-9BAA-42DA-B049-CF5946E4B491} = {B8CC277A-B5D0-4C25-89DC-804EEF52B0CE}
+		{7E7C6CC0-5C2A-47C6-95DF-DDD67ECC7A75} = {CA23E112-64E5-49FD-876D-642CD6B2A8A6}
+		{91A20E09-38E3-4127-8ABD-DA55CD7A88AA} = {CA23E112-64E5-49FD-876D-642CD6B2A8A6}
+		{080E83BE-626E-481B-9414-52B5B3C1580C} = {CA23E112-64E5-49FD-876D-642CD6B2A8A6}
+		{EED9B84C-D061-48D1-829D-940BF1E7D49A} = {CA23E112-64E5-49FD-876D-642CD6B2A8A6}
+		{F81F9915-2C3F-4D90-A4B6-F7AD3F635A1D} = {FA9ECFE2-267F-46F9-B42D-7CEFBC4A8B35}
+		{ED44E500-9732-4C47-B2DE-E826809E1E0E} = {FA9ECFE2-267F-46F9-B42D-7CEFBC4A8B35}
+		{CA23E112-64E5-49FD-876D-642CD6B2A8A6} = {0D335DA8-78DE-4D51-9B46-0AB8431C73C1}
+		{B8CC277A-B5D0-4C25-89DC-804EEF52B0CE} = {0D335DA8-78DE-4D51-9B46-0AB8431C73C1}
+		{64B506B2-66E3-43C4-AEF0-34AB58C1D627} = {B8CC277A-B5D0-4C25-89DC-804EEF52B0CE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E152495F-D218-47F7-B783-97C99749B337}
+	EndGlobalSection
+EndGlobal

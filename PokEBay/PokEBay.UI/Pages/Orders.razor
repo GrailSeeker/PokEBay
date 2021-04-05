@@ -1,0 +1,84 @@
+﻿@page "/orders"
+
+@using PokEBay.UI.Infrastructure.Orders.DTO;
+@using PokEBay.UI.Infrastructure.Orders;
+
+@inject IOrderService _orderService;
+
+<h3>Orders</h3>
+
+@if (!string.IsNullOrEmpty(_error))
+{
+    <div class="alert-danger">
+        @_error
+    </div>
+}
+
+@if (_loading)
+{
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+}
+
+@if (orders != null)
+{
+    @foreach (var order in orders)
+    {
+        <div class="alert-heading">
+            <p>@order.Id</p>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    @*<th>Id</th>*@
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in order.OrderItems)
+                {
+                    <tr>
+                        <td><img src="@item.PictureUri" alt="Image not found" height="100" width="100"></td>
+                        @*<td>@item.Id</td>*@
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    string _error;
+    bool _loading = true;
+
+    IEnumerable<OrderDto> orders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _error = string.Empty;
+
+        try
+        {
+            orders = await _orderService.GetOrdersAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+
+        _loading = false;
+    }
+}
