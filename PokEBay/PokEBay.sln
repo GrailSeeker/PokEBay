@@ -17,8 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{FA9ECFE2-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{F81F9915-2C3F-4D90-A4B6-F7AD3F635A1D}"
 	ProjectSection(SolutionItems) = preProject
-		dapr\components\pokebay-pubsub.yaml = dapr\components\pokebay-pubsub.yaml
 		dapr\components\pokebay-statestore.yaml = dapr\components\pokebay-statestore.yaml
+		dapr\components\pubsub.yaml = dapr\components\pubsub.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{ED44E500-9732-4C47-B2DE-E826809E1E0E}"

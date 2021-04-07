@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PokEBay.Notifications.API.Infrastructure;
-using PokEBay.Notifications.API.Infrastructure.EmailService;
 
 namespace PokEBay.Notifications.API
 {
@@ -22,6 +20,7 @@ namespace PokEBay.Notifications.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddControllers().AddDapr();
             services.AddSwaggerGen(c =>
             {
@@ -32,8 +31,7 @@ namespace PokEBay.Notifications.API
                                     Version = Configuration["SwaggerConfiguration:ApiVersion"]
                                 });
             });
-
-            services.AddLogging(loggingBuilder => { loggingBuilder.AddSeq(); });
+            //services.AddLogging(loggingBuilder => { loggingBuilder.AddSeq(); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

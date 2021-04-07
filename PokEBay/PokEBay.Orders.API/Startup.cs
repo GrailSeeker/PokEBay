@@ -43,6 +43,7 @@ namespace PokEBay.Orders.API
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers().AddDapr();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(Configuration["SwaggerConfiguration:ApiVersion"],
@@ -70,13 +71,10 @@ namespace PokEBay.Orders.API
             app.UseRouting();
 
             //app.UseAuthorization();
-            
-            app.UseCloudEvents();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapSubscribeHandler();
             });
         }
     }

@@ -5,6 +5,7 @@ using PokEBay.Orders.API.Infrastructure;
 using PokEBay.Orders.API.Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace PokEBay.Orders.API.Controllers
@@ -53,7 +54,7 @@ namespace PokEBay.Orders.API.Controllers
             {
                 var order = await _orderService.CreateOrderAsync(orderItems);
 
-                await _daprClient.PublishEventAsync<OrderDto>(
+                await _daprClient.PublishEventAsync<object>(
                                                                _configuration["DaprConfiguration:PubSubComponent"],
                                                                _configuration["DaprConfiguration:NotificationTopic"],
                                                                order
@@ -63,6 +64,7 @@ namespace PokEBay.Orders.API.Controllers
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"{ex.Message} \n {ex.InnerException?.Message}");
                 return BadRequest($"{ex.Message} \n {ex.InnerException.Message}");
             }
         }
