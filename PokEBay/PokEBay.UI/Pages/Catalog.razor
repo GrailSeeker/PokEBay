@@ -9,55 +9,69 @@
 @inject IBasketService _basketService;
 @inject ICatalogService _catalogService;
 
-<h3>Catalog</h3>
+<div class="container-fluid">
+    <h2>Catalog</h2>
+</div>
 
 @if (!string.IsNullOrEmpty(_error))
 {
-    <div class="alert-danger">
-        @_error
-    </div>
+    @if (!string.IsNullOrEmpty(_error))
+    {
+        <div class="alert alert-warning" role="alert">
+            @_error
+        </div>
+    }
 }
 
 @if (_loading)
 {
-    <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border text-info" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
+    <Loader></Loader>
 }
 
 @if (catalogItems != null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                @*<th>Id</th>*@
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="container-fluid">
+        <div class="row mb-2">
             @foreach (var item in catalogItems)
             {
-                <tr>
-                    <td><img src="@item.PictureUri" alt="Image not found" height="100" width="100"></td>
-                    @*<td>@item.Id</td>*@
-                    <td>@item.Name</td>
-                    <td>@item.Description</td>
-                    <td>@item.Price</td>
-                    <td>
-                        <button class="btn btn-info btn-sm shadow" @onclick="@(()=> AddItemToBasketAsync(item))">Add to basket</button>
-                    </td>
-                </tr>
+                <div class="col-md-3">
+                    <div class="card mt-2" style="height:40rem;">
+                        <img class="card-img-top" src=@item.PictureUri alt="Pic" height="250">
+                        <div class="card-body">
+
+                            <h4 class="card-title">@item.Name</h4>
+
+                            <p class="card-text">@item.Description</p>
+
+                            <div class="mt-2">
+                                <span class="badge badge-info" style="margin-left: 0.5em">@item.Category</span>
+                            </div>
+
+                            <div>
+                                @foreach (var itemType in item.Type.Split(","))
+                                {
+                                    <span class="badge badge-warning" style="margin-left: 0.5em">@itemType</span>
+                                }
+                            </div>
+
+                            <div>
+                                @foreach (var weakness in item.Weaknesses.Split(","))
+                                {
+                                    <span class="badge badge-danger" style="margin-left: 0.5em">@weakness</span>
+                                }
+                            </div>
+
+                            <h4 class="card-text mt-4">$ @item.Price</h4>
+
+                            <button type="button" class="btn btn-primary mt-2" @onclick="@(() => AddItemToBasketAsync(@item))">
+                                <span class="oi oi-cart" aria-hidden="true">&nbsp;</span> Add to basket
+                            </button>
+                        </div>
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
+        </div>
+    </div>
 }
 
 @code {
@@ -75,6 +89,11 @@
         try
         {
             catalogItems = await _catalogService.GetCatalogItemsAsync();
+
+            if (catalogItems == null)
+            {
+                _error = "No items found in the catalog.";
+            }
         }
         catch (Exception ex)
         {
@@ -93,9 +112,12 @@
         {
             Id = catalogItem.Id,
             Description = catalogItem.Description,
-            Name=catalogItem.Name,
+            Name = catalogItem.Name,
             PictureUri = catalogItem.PictureUri,
-            Price = catalogItem.Price
+            Price = catalogItem.Price,
+            Category = catalogItem.Category,
+            Type = catalogItem.Type,
+            Weaknesses = catalogItem.Weaknesses
         };
 
         try

@@ -10,6 +10,7 @@ services:
       - "443"
     volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
   pokebay.basket.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -21,12 +22,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=grailseeker@123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/PokEBay.UI.pfx
     ports:
       - "80"
       - "443"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.aspnet/https:/https:ro
+      #- ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   pokebay.catalog.api:
     environment:
@@ -45,6 +48,12 @@ services:
   pokebay.notifications.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=grailseeker@123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/pokebay.notifications.pfx
     ports:
       - "80"
+      - "443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
 

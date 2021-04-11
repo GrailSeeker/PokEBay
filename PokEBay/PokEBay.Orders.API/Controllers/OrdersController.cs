@@ -31,12 +31,7 @@ namespace PokEBay.Orders.API.Controllers
         {
             try
             {
-                var items = await _orderService.GetOrdersAsync();
-
-                if (items == null)
-                {
-                    return NotFound("No orders found.");
-                }
+                var items = await _orderService.GetOrdersAsync();                
 
                 return Ok(items);
             }

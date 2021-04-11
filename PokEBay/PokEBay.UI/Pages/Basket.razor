@@ -9,56 +9,70 @@
 @inject IOrderService _orderService;
 @inject IBasketService _basketService;
 
-<h3>Basket</h3>
+<div class="container-fluid">
+    <h2>Basket</h2>
+    <h4 class="text-muted">$ @basketValue</h4>
+</div>
+
 
 @if (!string.IsNullOrEmpty(_error))
 {
-    <div class="alert-danger">
+    <div class="alert alert-warning" role="alert">
         @_error
     </div>
 }
 
 @if (_loading)
 {
-    <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border text-info" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
+    <Loader></Loader>
 }
 
 @if (basketItems != null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                @*<th>Id</th>*@
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in basketItems)
-            {
-                <tr>
-                    <td><img src="@item.PictureUri" alt="Image not found" height="100" width="100"></td>
-                    @*<td>@item.Id</td>*@
-                    <td>@item.Name</td>
-                    <td>@item.Description</td>
-                    <td>@item.Price</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="container-fluid">
+    <div class="row mb-2">
+        @foreach (var item in basketItems)
+        {
+            <div class="col-md-3">
+                <div class="card mt-2">
+                    <img class="card-img-top" src=@item.PictureUri alt="Pic" height="250">
+                    <div class="card-body">
 
-    <div>
+                        <h4 class="card-title">@item.Name</h4>
+
+                        <div class="mt-2">
+                            <span class="badge badge-info" style="margin-left: 0.5em">@item.Category</span>
+                        </div>
+
+                        <div>
+                            @foreach (var itemType in item.Type.Split(","))
+                            {
+                                <span class="badge badge-warning" style="margin-left: 0.5em">@itemType</span>
+                            }
+                        </div>
+
+                        <div>
+                            @foreach (var weakness in item.Weaknesses.Split(","))
+                            {
+                                <span class="badge badge-danger" style="margin-left: 0.5em">@weakness</span>
+                            }
+                        </div>
+
+                        <h4 class="card-text mt-4">$ @item.Price</h4>
+
+                        <small class="text-muted mt-4">Added on @item.CreatedOn.ToShortDateString()</small>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="mt-4">
         <button class="btn btn-info btn-sm shadow" @onclick="PlaceOrderAsync">Place Order</button>
         <button class="btn btn-info btn-sm shadow" @onclick="ClearBasketAsync">Clear Basket</button>
     </div>
+</div>
 }
 
 @code {
@@ -66,7 +80,9 @@
     string _error;
     bool _loading = true;
 
+
     IEnumerable<BasketItemDto> basketItems;
+    decimal basketValue;
 
     protected override async Task OnInitializedAsync()
     {
@@ -76,6 +92,16 @@
         try
         {
             basketItems = await _basketService.GetItemsFromBasketAsync();
+
+            if (basketItems == null)
+            {
+                basketValue = 0;
+                _error = "No items found in the basket.";
+            }
+            else
+            {
+                basketValue = basketItems.Sum(bi => bi.Price);
+            }
         }
         catch (Exception ex)
         {
@@ -95,12 +121,18 @@
             await _basketService.ClearBasketAsync();
 
             basketItems = await _basketService.GetItemsFromBasketAsync();
+
+            if (basketItems == null)
+            {
+                _error = "Basket cleared!";
+            }
         }
         catch (Exception ex)
         {
             _error = ex.Message;
         }
 
+        basketValue = 0;
         _loading = false;
     }
 
@@ -121,7 +153,10 @@
                     Name = item.Name,
                     Description = item.Description,
                     PictureUri = item.PictureUri,
-                    Price = item.Price
+                    Price = item.Price,
+                    Type = item.Type,
+                    Category = item.Category,
+                    Weaknesses = item.Weaknesses
                 };
 
                 orderItemDtoList.Add(orderItemDto);
@@ -130,6 +165,10 @@
             await _orderService.CreateOrderAsync(orderItemDtoList);
 
             await ClearBasketAsync();
+
+            _error = "Order placed! No more items in the basket.";
+
+            basketValue = 0;
         }
         catch (Exception ex)
         {

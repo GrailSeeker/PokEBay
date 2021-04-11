@@ -39,16 +39,18 @@ namespace PokEBay.UI.Infrastructure.Orders
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogCritical("Failed to get order details.", response);
-                    throw new Exception($"No order(s) found.");
+                    throw new Exception($"Failed to get order details: \n {response.StatusCode} : {response.ReasonPhrase}");
                 }
 
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<OrderDto>>();
+                var result = await response.Content?.ReadFromJsonAsync<IEnumerable<OrderDto>>();
+
+                _logger.LogInformation("Successfully fetched order details.", result);
 
                 return result;
             }
             catch (Exception ex)
             {
-                throw;
+                return null;
             }
         }
 
@@ -66,8 +68,8 @@ namespace PokEBay.UI.Infrastructure.Orders
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogCritical("Failed create order.", response);
-                    throw new Exception($"Failed to create order. Please try again.");
+                    _logger.LogCritical("Failed to create order.", response);
+                    throw new Exception($"Failed to create order: \n {response.StatusCode} : {response.ReasonPhrase}");
                 }
             }
             catch (Exception ex)
@@ -75,7 +77,7 @@ namespace PokEBay.UI.Infrastructure.Orders
                 throw;
             }
 
-            _logger.LogInformation("An item was added to the basket.", orderItems);
+            _logger.LogInformation("An order was created.", orderItems);
         }
     }
 }

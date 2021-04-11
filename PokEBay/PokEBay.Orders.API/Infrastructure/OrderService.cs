@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PokEBay.Orders.API.Domain.Entities;
 using PokEBay.Orders.API.Infrastructure.DTO;
 using PokEBay.Orders.API.Infrastructure.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,7 +35,10 @@ namespace PokEBay.Orders.API.Infrastructure
                     Name = item.Name,
                     Description = item.Description,
                     Price = item.Price,
-                    PictureUri = item.PictureUri
+                    PictureUri = item.PictureUri,
+                    Category = item.Category,
+                    Type = item.Type,
+                    Weaknesses = item.Weaknesses
                 };
 
                 orderItems.Add(orderItem);
@@ -45,7 +49,7 @@ namespace PokEBay.Orders.API.Infrastructure
 
             var order = new Order
             {
-                OrderItems = orderItems
+                OrderItems = orderItems,
             };
 
             var result = _orderContext.Orders.Add(order);
@@ -89,13 +93,17 @@ namespace PokEBay.Orders.API.Infrastructure
                         Name = item.Name,
                         Description = item.Description,
                         Price = item.Price,
-                        PictureUri = item.PictureUri
+                        PictureUri = item.PictureUri,
+                        Category = item.Category,
+                        Type=item.Type,
+                        Weaknesses = item.Weaknesses
                     };
 
                     orderItemsDto.Add(orderItem);
                 }
 
                 orderObj.OrderItems = orderItemsDto;
+                orderObj.CreatedOn = order.CreatedOn;
 
                 orderDto.Add(orderObj);
             }

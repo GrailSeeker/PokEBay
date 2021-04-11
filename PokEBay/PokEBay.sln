@@ -17,8 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{FA9ECFE2-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{F81F9915-2C3F-4D90-A4B6-F7AD3F635A1D}"
 	ProjectSection(SolutionItems) = preProject
+		dapr\components\pokebay-email.yaml = dapr\components\pokebay-email.yaml
+		dapr\components\pokebay-pubsub.yaml = dapr\components\pokebay-pubsub.yaml
+		dapr\components\pokebay-secretstore.json = dapr\components\pokebay-secretstore.json
+		dapr\components\pokebay-secretstore.yaml = dapr\components\pokebay-secretstore.yaml
 		dapr\components\pokebay-statestore.yaml = dapr\components\pokebay-statestore.yaml
-		dapr\components\pubsub.yaml = dapr\components\pubsub.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{ED44E500-9732-4C47-B2DE-E826809E1E0E}"
@@ -35,6 +38,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokEBayTestUI", "PokEBayTestUI\PokEBayTestUI.csproj", "{64B506B2-66E3-43C4-AEF0-34AB58C1D627}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5DD5BE92-B390-4424-AE78-B43822D9CB2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "certs", "certs", "{2587AE00-3526-4BB1-9F9C-C7DFC92229E9}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\.aspnet\https\pokebay.notifications.pfx = ..\..\..\..\.aspnet\https\pokebay.notifications.pfx
+		..\..\..\..\.aspnet\https\PokEBay.UI.pfx = ..\..\..\..\.aspnet\https\PokEBay.UI.pfx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

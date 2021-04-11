@@ -28,11 +28,6 @@ namespace PokEBay.Catalog.API.Controllers
             {
                 var items = await _catalogService.GetCatalogItemsAsync();
 
-                if (items == null)
-                {
-                    return NotFound("No items found in the catalog.");
-                }
-
                 return Ok(items);
             }
             catch (Exception ex)

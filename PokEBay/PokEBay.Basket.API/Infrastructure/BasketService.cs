@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using PokEBay.Basket.API.DTO;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -38,6 +39,7 @@ namespace PokEBay.Basket.API.Infrastructure
         public async Task AddToBasketAsync(BasketDto basketDto)
         {
             var basketItems = new List<BasketDto>();
+            basketDto.CreatedOn = DateTime.Now;
             basketItems.Add(basketDto);
 
             var serializedbasketItems = await _daprClient.GetStateAsync<string>(

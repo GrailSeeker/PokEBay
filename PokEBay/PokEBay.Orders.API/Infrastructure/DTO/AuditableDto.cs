@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PokEBay.Orders.API.Domain.Entities
+namespace PokEBay.Orders.API.Infrastructure.DTO
 {
-    public class AuditableEntity
+    public class AuditableDto
     {
         public DateTime CreatedOn { get; set; }
     }

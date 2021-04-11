@@ -29,16 +29,6 @@ namespace PokEBay.Basket.API.Controllers
             {
                 var items = await _basketService.GetItemsFromBasketAsync();
 
-                if (items == null)
-                {
-                    return NotFound("Basket is empty!");
-                }
-
-                if (items.Count() == 0)
-                {
-                    return NotFound("No items found in the catalog.Basket is empty!");
-                }
-
                 return Ok(items);
             }
             catch (Exception ex)

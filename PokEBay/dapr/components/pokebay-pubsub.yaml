@@ -1,0 +1,26 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: pubsub
+spec:
+  type: pubsub.redis
+  version: v1
+  metadata:
+   - name: redisHost
+     value: redis:6379
+   - name: redisPassword
+     value: ""
+   - name: actorStateStore
+     value: "true"
+
+#apiVersion: dapr.io/v1alpha1
+#kind: Component
+#metadata:
+#  name: pubsub
+#  namespace: default
+#spec:
+#  type: pubsub.rabbitmq
+#  version: v1
+#  metadata:
+#  - name: host
+#    value: "amqp://rabbitmq:5672"

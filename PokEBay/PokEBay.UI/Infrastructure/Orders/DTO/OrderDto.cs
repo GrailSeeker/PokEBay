@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PokEBay.UI.Infrastructure.Orders.DTO
 {
-    public class OrderDto
+    public class OrderDto : AuditableOrderDto
     {
         public Guid Id { get; set; }
         public IEnumerable<OrderItemDto> OrderItems { get; set; }

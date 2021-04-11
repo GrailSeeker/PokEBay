@@ -2,10 +2,8 @@
 kind: Configuration
 metadata:
   name: pokebay-config
-spec:
+spec: 
   tracing:
     samplingRate: "1"
     zipkin:
       endpointAddress: http://localhost:9411/api/v2/spans
-  metric:
-    enabled: false

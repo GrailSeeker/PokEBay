@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PokEBay.Orders.API.Infrastructure.DTO
 {
-    public class OrderDto
+    public class OrderDto : AuditableDto
     {
         public Guid Id { get; set; }
         public IEnumerable<OrderItemDto> OrderItems { get; set; }
@@ -12,13 +11,6 @@ namespace PokEBay.Orders.API.Infrastructure.DTO
         public OrderDto()
         {
             OrderItems = new List<OrderItemDto>();
-        }
-
-        public decimal GetTotal()
-        {
-            var result = OrderItems.Sum(o => o.Price);
-
-            return result < 0 ? 0 : result;
         }
     }
 }

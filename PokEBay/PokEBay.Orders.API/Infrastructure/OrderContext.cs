@@ -24,12 +24,7 @@ namespace PokEBay.Orders.API.Infrastructure
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = "GrailSeeker";
                         entry.Entity.CreatedOn = DateTime.Now; ;
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = "GrailSeeker";
-                        entry.Entity.LastModifiedOn = DateTime.Now;
                         break;
                 }
             }

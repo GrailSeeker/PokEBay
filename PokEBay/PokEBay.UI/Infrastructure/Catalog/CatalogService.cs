@@ -41,16 +41,18 @@ namespace PokEBay.UI.Infrastructure.Catalog
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogCritical("Failed to get items from the catalog.", response);
-                    throw new Exception($"No item(s) found in the catalog.");
+                    throw new Exception($"Failed to get items from the catalog: \n {response.StatusCode} : {response.ReasonPhrase}");
                 }
 
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<CatalogItemDto>>();
+                var result = await response.Content?.ReadFromJsonAsync<IEnumerable<CatalogItemDto>>();
+
+                _logger.LogInformation("Successfully fetched items from catalog.", result);
 
                 return result;
             }
             catch (Exception ex)
             {
-                throw;
+                return null;
             }
         }
 
@@ -61,7 +63,7 @@ namespace PokEBay.UI.Infrastructure.Catalog
                 var request = _daprClient.CreateInvokeMethodRequest(
                                                                     HttpMethod.Post,
                                                                     _configuration["DaprConfiguration:AppId_Catalog"],
-                                                                    _catalogApiDefaultMethod, 
+                                                                    _catalogApiDefaultMethod,
                                                                     catalogItemDto
                                                                    );
 

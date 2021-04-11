@@ -49,7 +49,7 @@ namespace PokEBay.Notifications.API
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseCloudEvents();
 

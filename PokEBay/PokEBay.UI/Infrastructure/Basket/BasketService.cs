@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace PokEBay.UI.Infrastructure.Basket
 {
     public class BasketService : IBasketService
-    {        
+    {
         const string _basketApiDefaultMethod = "basket";
 
         DaprClient _daprClient;
@@ -30,7 +30,7 @@ namespace PokEBay.UI.Infrastructure.Basket
             try
             {
                 var request = _daprClient.CreateInvokeMethodRequest(
-                                                                    HttpMethod.Get, 
+                                                                    HttpMethod.Get,
                                                                     _configuration["DaprConfiguration:AppId_Basket"],
                                                                     _basketApiDefaultMethod
                                                                    );
@@ -39,16 +39,18 @@ namespace PokEBay.UI.Infrastructure.Basket
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogCritical("Failed to get items from the basket.", response);
-                    throw new Exception($"No item(s) found in the basket.");
+                    throw new Exception($"Failed to get items from the basket: \n {response.StatusCode} : {response.ReasonPhrase}");
                 }
 
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<BasketItemDto>>();
+                var result = await response.Content?.ReadFromJsonAsync<IEnumerable<BasketItemDto>>();
+
+                _logger.LogInformation("Successfully fetched items from basket.", result);
 
                 return result;
             }
             catch (Exception ex)
             {
-                throw;
+                return null;
             }
         }
 
@@ -58,7 +60,7 @@ namespace PokEBay.UI.Infrastructure.Basket
             {
                 var request = _daprClient.CreateInvokeMethodRequest(
                                                                     HttpMethod.Post,
-                                                                    _configuration["DaprConfiguration:AppId_Basket"], 
+                                                                    _configuration["DaprConfiguration:AppId_Basket"],
                                                                     _basketApiDefaultMethod,
                                                                     basketItemDto
                                                                    );
@@ -67,7 +69,7 @@ namespace PokEBay.UI.Infrastructure.Basket
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogCritical("Failed to add items to the basket.", response);
-                    throw new Exception($"Failed to add items to the basket. Please try again.");
+                    throw new Exception($"Failed to add items to the basket.: \n {response.StatusCode} : {response.ReasonPhrase}");
                 }
             }
             catch (Exception ex)
@@ -92,7 +94,7 @@ namespace PokEBay.UI.Infrastructure.Basket
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogCritical("Failed to clear items from the basket.", response);
-                    throw new Exception($"Failed to clear items from the basket. Please try again.");
+                    throw new Exception($"Failed to clear items from the basket.: \n {response.StatusCode} : {response.ReasonPhrase}");
                 }
             }
             catch (Exception ex)

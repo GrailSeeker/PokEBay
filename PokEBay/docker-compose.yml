@@ -2,11 +2,11 @@ version: '3.4'
 
 services:
   
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: pokebay_rabbitmq
-    ports:
-      - "5672:5672"
+  #rabbitmq:
+  #  image: rabbitmq:3-management-alpine
+  #  container_name: pokebay_rabbitmq
+  #  ports:
+  #    - "5672:5672"
   
   redis:
     image: redis:alpine
@@ -34,6 +34,14 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "5340:5340"
+
+  #smtp4dev:
+  #  image: rnwood/smtp4dev:v3
+  #  container_name: pokebay_smtp
+  #  restart: always
+  #  ports:
+  #    - "3000:80"
+  #    - "2525:25"
 
   pokebaytestui:
     image: ${DOCKER_REGISTRY-}pokebaytestui
@@ -122,7 +130,6 @@ services:
       context: .
       dockerfile: PokEBay.Orders.API/Dockerfile
     depends_on:
-      - rabbitmq
       - redis
       - seq
     ports:
@@ -144,7 +151,6 @@ services:
       context: .
       dockerfile: PokEBay.Notifications.API/Dockerfile
     depends_on:
-      - pokebay.orders.api
       - seq
       - redis
     ports:
