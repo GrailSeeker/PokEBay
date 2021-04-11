@@ -21,14 +21,18 @@ services:
   pokebay.ui:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=grailseeker@123
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/PokEBay.UI.pfx
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ~/.aspnet/https:/https:ro
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PATH_BASE=/pokebay.ui
+      - PORT=80
+      - Serilog__MinimumLevel__Override__pokebay.ui=Verbose
+      #- ASPNETCORE_URLS=https://+:443;http://+:80
+      #- ASPNETCORE_Kestrel__Certificates__Default__Password=grailseeker@123
+      #- ASPNETCORE_Kestrel__Certificates__Default__Path=/https/PokEBay.UI.pfx
+    #ports:      
+      #- "80"
+      #- "443"
+    #volumes:
+    #  - ~/.aspnet/https:/https:ro
       #- ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   pokebay.catalog.api:
@@ -48,12 +52,16 @@ services:
   pokebay.notifications.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=grailseeker@123
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/pokebay.notifications.pfx
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ~/.aspnet/https:/https:ro
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PATH_BASE=/pokebay.notifications.api
+      - PORT=80
+      - Serilog__MinimumLevel__Override__pokebay.notifications.api=Verbose
+    #  - ASPNETCORE_URLS=https://+:443;http://+:80
+    #  - ASPNETCORE_Kestrel__Certificates__Default__Password=grailseeker@123
+    #  - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/pokebay.notifications.pfx
+    #ports:
+    #  - "80"
+    #  - "443"
+    #volumes:
+    #  - ~/.aspnet/https:/https:ro
 

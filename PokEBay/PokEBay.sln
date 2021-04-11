@@ -41,8 +41,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "certs", "certs", "{2587AE00-3526-4BB1-9F9C-C7DFC92229E9}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\.aspnet\https\pokebay.notifications.pfx = ..\..\..\..\.aspnet\https\pokebay.notifications.pfx
-		..\..\..\..\.aspnet\https\PokEBay.UI.pfx = ..\..\..\..\.aspnet\https\PokEBay.UI.pfx
+		certs\pokebay.notifications.pfx = certs\pokebay.notifications.pfx
+		certs\PokEBay.UI.pfx = certs\PokEBay.UI.pfx
 	EndProjectSection
 EndProject
 Global

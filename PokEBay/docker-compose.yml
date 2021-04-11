@@ -33,15 +33,15 @@ services:
     environment:
       - ACCEPT_EULA=Y
     ports:
-      - "5340:5340"
+      - "5340:80"
 
-  #smtp4dev:
-  #  image: rnwood/smtp4dev:v3
-  #  container_name: pokebay_smtp
-  #  restart: always
-  #  ports:
-  #    - "3000:80"
-  #    - "2525:25"
+  smtp4dev:
+    image: rnwood/smtp4dev:v3
+    container_name: pokebay_smtp
+    restart: always
+    ports:
+      - "3000:80"
+      - "2525:25"
 
   pokebaytestui:
     image: ${DOCKER_REGISTRY-}pokebaytestui
@@ -92,7 +92,7 @@ services:
       - pokebay.notifications.api
       - seq
     ports:
-      - "5121:80"
+      - "5104:80"
 
   pokebay.ui-dapr:
     image: "daprio/daprd:latest"

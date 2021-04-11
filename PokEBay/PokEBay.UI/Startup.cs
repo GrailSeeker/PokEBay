@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using PokEBay.UI.Infrastructure.Basket;
 using PokEBay.UI.Infrastructure.Catalog;
 using PokEBay.UI.Infrastructure.Orders;
@@ -46,7 +45,7 @@ namespace PokEBay.UI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
