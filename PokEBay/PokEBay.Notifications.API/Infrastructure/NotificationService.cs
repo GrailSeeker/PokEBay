@@ -29,7 +29,7 @@ namespace PokEBay.Notifications.API.Infrastructure
 
             try
             {
-                var apiKey = "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";
+                var apiKey = "[SendGrid Key]";
                 var client = new SendGridClient(apiKey);
                 var from = new EmailAddress("test@example.com", "Example User");
                 var subject = "Sending with SendGrid is Fun";
