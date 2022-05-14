@@ -1,0 +1,75 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: blazorui-cm
+  # # namespace: {{ .Values.namespace }}
+  labels:
+    app: pokebay
+    service: blazorui
+data:
+  ASPNETCORE_ENVIRONMENT: Development
+  ASPNETCORE_URLS: http://0.0.0.0:80
+  ApiGatewayUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30050
+  IdentityUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30008
+
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: blazorui
+  # namespace: {{ .Values.namespace }}
+  labels:
+    app: pokebay
+    service: blazorui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: blazorui
+  template:
+    metadata:
+      labels:
+        app: pokebay
+        service: blazorui
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "blazorui"
+        dapr.io/app-port: "80"
+        dapr.io/config: "dapr-config"
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+        - name: blazorui
+          image: grailseekerdocker/pokebay:blazorui
+          # imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: blazorui-cm
+          # readinessProbe:
+          #   httpGet:
+          #     path: /hc
+          #     port: 80
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: blazor-client
+  # namespace: {{ .Values.namespace }}
+  labels:
+    app: pokebay
+    service: blazorui
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000
+  selector:
+    service: blazorui

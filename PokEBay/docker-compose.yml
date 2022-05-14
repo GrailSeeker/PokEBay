@@ -2,12 +2,6 @@ version: '3.4'
 
 services:
   
-  #rabbitmq:
-  #  image: rabbitmq:3-management-alpine
-  #  container_name: pokebay_rabbitmq
-  #  ports:
-  #    - "5672:5672"
-  
   redis:
     image: redis:alpine
     container_name: pokebay_redis
@@ -35,51 +29,7 @@ services:
     ports:
       - "5340:80"
 
-  smtp4dev:
-    image: rnwood/smtp4dev:v3
-    container_name: pokebay_smtp
-    restart: always
-    ports:
-      - "3000:80"
-      - "2525:25"
-
-  pokebaytestui:
-    image: ${DOCKER_REGISTRY-}pokebaytestui
-    build:
-      context: .
-      dockerfile: PokEBayTestUI/Dockerfile
-
-  pokebaytestui-dapr:
-    image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "pokebaytestui", "-app-port", "80", "-components-path", "/components", "-config", "/configuration/pokebay-config.yaml" ]
-    volumes:
-      - "./dapr/components/:/components"
-      - "./dapr/configuration/:/configuration"
-    depends_on:
-      - pokebaytestui
-    network_mode: "service:pokebaytestui"
-
-  pokebay.basket.api:
-    image: ${DOCKER_REGISTRY-}pokebaybasketapi
-    build:
-      context: .
-      dockerfile: PokEBay.Basket.API/Dockerfile
-    depends_on:
-      - redis
-      - seq
-    ports:
-      - "5103:80"
-
-  pokebay.basket.api-dapr:
-    image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "pokebaybasketapi", "-app-port", "80", "-components-path", "/components",  "-config", "/configuration/pokebay-config.yaml" ]
-    volumes:
-      - "./dapr/components/:/components"
-      - "./dapr/configuration/:/configuration"
-    depends_on:
-      - pokebay.basket.api
-    network_mode: "service:pokebay.basket.api"
-
+  # pokebay.ui
   pokebay.ui:
     image: ${DOCKER_REGISTRY-}pokebayui
     build:
@@ -104,6 +54,7 @@ services:
       - pokebay.ui
     network_mode: "service:pokebay.ui"
 
+  # pokebay.catalog.api
   pokebay.catalog.api:
     image: ${DOCKER_REGISTRY-}pokebaycatalogapi
     build:
@@ -124,6 +75,29 @@ services:
       - pokebay.catalog.api
     network_mode: "service:pokebay.catalog.api"
 
+  # pokebay.basket.api
+  pokebay.basket.api:
+    image: ${DOCKER_REGISTRY-}pokebaybasketapi
+    build:
+      context: .
+      dockerfile: PokEBay.Basket.API/Dockerfile
+    depends_on:
+      - redis
+      - seq
+    ports:
+      - "5103:80"
+
+  pokebay.basket.api-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "pokebaybasketapi", "-app-port", "80", "-components-path", "/components",  "-config", "/configuration/pokebay-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
+    depends_on:
+      - pokebay.basket.api
+    network_mode: "service:pokebay.basket.api"   
+
+  # pokebay.orders.api
   pokebay.orders.api:
     image: ${DOCKER_REGISTRY-}pokebayordersapi
     build:
@@ -145,6 +119,7 @@ services:
       - pokebay.orders.api
     network_mode: "service:pokebay.orders.api"
 
+  # pokebay.notifications.api
   pokebay.notifications.api:
     image: ${DOCKER_REGISTRY-}pokebaynotificationsapi
     build:
