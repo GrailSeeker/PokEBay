@@ -1,4 +1,4 @@
 # PokEBay
  Multi-container .NET 5 app to showcase Dapr building blocks.
  
- ## Updated with Kubernetes Helm charts for deployments.
+ [May 14, 2022] Updated with Kubernetes Helm charts for deployments.
